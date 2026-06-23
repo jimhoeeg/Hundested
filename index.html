@@ -9,16 +9,24 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <!-- Google font for et nordisk, professionelt look -->
+  <!-- Mukta: venlig humanistisk sans der matcher sitets typografi -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+          fontFamily: { sans: ['Mukta', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+          colors: {
+            // Brandfarver aflæst fra hundested-roervig.dk
+            petrol:   { light: '#1d5b6f', DEFAULT: '#164a5b', dark: '#10394686' },
+            brand:    { light: '#23b3a1', DEFAULT: '#1a9e8e', dark: '#13897a' },
+            gold:     '#f4c01a',
+            brandred: '#e2061b',
+            pricegreen:'#1ca35f',
+          },
           keyframes: {
             fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
             scaleIn: { '0%': { opacity: 0, transform: 'scale(.92) translateY(10px)' }, '100%': { opacity: 1, transform: 'scale(1) translateY(0)' } },
@@ -37,77 +45,128 @@
   </script>
   <style>
     html { scroll-behavior: smooth; }
-    body { background-color: #fafaf9; }
-    /* Skjult QR via CSS grid-mønster */
-    .qr-grid {
-      display: grid;
-      grid-template-columns: repeat(11, 1fr);
-      grid-template-rows: repeat(11, 1fr);
-      gap: 2px;
-    }
-    .qr-grid span { background: #1c1917; border-radius: 1px; }
-    .route-card.active {
-      box-shadow: 0 0 0 2px #065f46, 0 12px 30px -12px rgba(6,95,70,.45);
-    }
+    body { background-color: #f1f4f6; }
+    .qr-grid { display: grid; grid-template-columns: repeat(11, 1fr); grid-template-rows: repeat(11, 1fr); gap: 2px; }
+    .qr-grid span { background: #164a5b; border-radius: 1px; }
+    .route-card.active { box-shadow: 0 0 0 2px #1a9e8e, 0 12px 30px -12px rgba(22,74,91,.45); }
+    .logo-circle { font-style: italic; }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 99px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5d8; border-radius: 99px; }
   </style>
 </head>
 
-<body class="font-sans text-stone-800 antialiased">
+<body class="font-sans text-petrol antialiased">
 
-  <!-- ============ HEADER ============ -->
-  <header class="bg-emerald-900 text-stone-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="h-11 w-11 rounded-xl bg-emerald-700/60 ring-1 ring-emerald-400/30 flex items-center justify-center">
-          <i class="fa-solid fa-ferry text-amber-400 text-xl"></i>
-        </div>
-        <div class="leading-tight">
-          <p class="font-extrabold tracking-tight text-lg">Hundested–Rørvig</p>
-          <p class="text-emerald-200/80 text-xs font-medium uppercase tracking-widest">Færgefart · Tur-guide</p>
+  <!-- ============ HEADER (site-matchende) ============ -->
+  <header class="bg-petrol text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between gap-4 py-3">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-3 shrink-0">
+          <div class="logo-circle h-12 w-12 rounded-full bg-brandred flex items-center justify-center font-extrabold text-white text-lg tracking-tighter">H/R</div>
+          <div class="leading-none">
+            <p class="font-extrabold text-[15px] tracking-tight">HUNDESTED<br>RØRVIG A/S</p>
+            <p class="text-[9px] tracking-[0.35em] text-white/70 mt-0.5">FÆRGEFART</p>
+          </div>
+        </a>
+
+        <!-- Nav (desktop) -->
+        <nav class="hidden xl:flex items-center gap-6 text-sm font-semibold">
+          <a href="#" class="relative pb-1 text-white after:absolute after:left-0 after:-bottom-0.5 after:h-[3px] after:w-full after:bg-brandred">FORSIDE</a>
+          <a href="#booking" class="hover:text-brand-light transition">BOOKING <i class="fa-solid fa-chevron-down text-[9px]"></i></a>
+          <a href="#" class="hover:text-brand-light transition">FARTPLAN</a>
+          <a href="#" class="hover:text-brand-light transition">BILLETPRISER</a>
+          <a href="#ruter" class="hover:text-brand-light transition">OPLEVELSER <i class="fa-solid fa-chevron-down text-[9px]"></i></a>
+          <a href="#" class="hover:text-brand-light transition">HISTORIE</a>
+          <a href="#" class="hover:text-brand-light transition">KONTAKT <i class="fa-solid fa-chevron-down text-[9px]"></i></a>
+        </nav>
+
+        <!-- Højre actions -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <a href="#" aria-label="Facebook" class="hidden sm:flex h-10 w-10 rounded-full bg-brand items-center justify-center text-white hover:bg-brand-dark transition">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="#booking" class="hidden sm:inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-semibold text-sm px-5 py-2.5 rounded-full transition">
+            <i class="fa-regular fa-calendar-check"></i> ONLINE BOOKING
+          </a>
+          <a href="#" class="inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-semibold text-sm px-4 py-2.5 rounded-full transition">
+            <i class="fa-solid fa-chevron-right text-[10px]"></i> MIN SIDE
+          </a>
         </div>
       </div>
-      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-emerald-100">
-        <a href="#ruter" class="hover:text-amber-300 transition">Ruter</a>
-        <a href="#booking" class="hover:text-amber-300 transition">Booking</a>
-        <a href="#" class="hover:text-amber-300 transition">Sejlplan</a>
-      </nav>
-      <a href="#booking" class="md:hidden inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-semibold text-sm px-4 py-2 rounded-lg transition">
-        <i class="fa-solid fa-ticket"></i> Book
-      </a>
     </div>
   </header>
 
   <!-- ============ HERO ============ -->
-  <section class="relative bg-emerald-800 text-stone-50 overflow-hidden">
-    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_20%,#34d399,transparent_45%),radial-gradient(circle_at_80%_0%,#fbbf24,transparent_40%)]"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
-      <span class="inline-flex items-center gap-2 bg-emerald-700/50 ring-1 ring-emerald-400/30 text-emerald-100 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-        <i class="fa-solid fa-leaf text-amber-300"></i> Skuldersæson · Cykel &amp; Vandring
-      </span>
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight max-w-2xl leading-tight">
-        Sejl over fjorden — og lad eventyret begynde på den anden side.
-      </h1>
-      <p class="mt-4 text-emerald-100/90 max-w-xl text-base sm:text-lg">
-        Lad dig inspirere af kystruter, gravelspor og familievenlige stier. Vi sender dig afsted med GPX-fil og medvind i ryggen.
-      </p>
+  <section class="relative bg-petrol text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_15%_30%,#1a9e8e,transparent_45%),radial-gradient(circle_at_85%_10%,#1d5b6f,transparent_50%)]"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16 grid lg:grid-cols-5 gap-8 items-center">
+
+      <!-- Tekst -->
+      <div class="lg:col-span-3">
+        <span class="inline-flex items-center gap-2 bg-white/10 ring-1 ring-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
+          <i class="fa-solid fa-leaf text-gold"></i> Skuldersæson · Cykel &amp; Vandring
+        </span>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
+          Genvejen til naturen<br>i Nordsjælland
+        </h1>
+        <p class="mt-5 text-white/85 max-w-xl text-base sm:text-lg">
+          Sejl over fjorden på 25 minutter — og lad eventyret begynde på den anden side.
+          Kystruter, gravelspor og familiestier venter. Vi sender dig afsted med GPX-fil og medvind i ryggen.
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="#ruter" class="inline-flex items-center gap-2 bg-white text-petrol font-bold px-6 py-3.5 rounded-full hover:bg-stone-100 transition">
+            Udforsk ruterne <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#booking" class="inline-flex items-center gap-2 ring-2 ring-white/40 text-white font-bold px-6 py-3.5 rounded-full hover:bg-white/10 transition">
+            FARTPLAN
+          </a>
+        </div>
+      </div>
+
+      <!-- Kampagne-tilbudskort (i sitets stil) -->
+      <div class="lg:col-span-2">
+        <div class="rounded-2xl bg-gradient-to-br from-brand to-brand-dark text-white p-6 shadow-2xl shadow-petrol-dark ring-1 ring-white/10">
+          <span class="inline-flex items-center gap-1.5 bg-gold text-petrol text-[11px] font-extrabold px-3 py-1.5 rounded-full">
+            <i class="fa-solid fa-sparkles"></i> SKULDERSÆSON-TILBUD
+          </span>
+          <div class="mt-4 flex items-end justify-between gap-3">
+            <div>
+              <h3 class="text-3xl font-extrabold leading-tight">Voksen<br>+ Cykel</h3>
+            </div>
+            <div class="text-right">
+              <p class="text-white/70 text-sm">Tidligere <span class="line-through">105 kr.</span></p>
+              <div class="mt-1 bg-white text-pricegreen rounded-xl px-4 py-2">
+                <span class="text-[11px] text-petrol/60 font-semibold block leading-none">Nu kun</span>
+                <span class="text-3xl font-extrabold">65 kr.</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center gap-2 text-white/85 text-sm">
+            <i class="fa-solid fa-ferry text-gold"></i> Hundested – Rørvig Færgefart
+          </div>
+          <span class="inline-block mt-3 bg-gold text-petrol text-xs font-extrabold px-3 py-1.5 rounded-full">Spar 40 kr. pr. tur!</span>
+          <a href="#booking" class="mt-5 w-full inline-flex items-center justify-center gap-2 bg-white text-petrol font-extrabold py-3 rounded-full hover:bg-stone-100 transition">
+            Book din tur nu <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 -mt-8 relative z-10 pb-20">
 
     <!-- ============ 1. VEJR- & NUDGING-BANNER ============ -->
-    <div id="weatherBanner" class="rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-700 text-white shadow-xl shadow-emerald-900/20 ring-1 ring-emerald-400/20 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+    <div id="weatherBanner" class="rounded-2xl bg-gradient-to-r from-brand to-brand-dark text-white shadow-xl shadow-petrol/20 ring-1 ring-white/10 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
       <div class="flex items-center gap-4">
         <div class="h-14 w-14 rounded-2xl bg-white/15 flex items-center justify-center shrink-0">
-          <i class="fa-solid fa-sun text-amber-300 text-3xl animate-pulseSoft"></i>
+          <i class="fa-solid fa-sun text-gold text-3xl animate-pulseSoft"></i>
         </div>
         <div>
-          <div class="flex items-center gap-2 text-emerald-100 text-xs font-semibold uppercase tracking-wider">
+          <div class="flex items-center gap-2 text-white/80 text-xs font-semibold uppercase tracking-wider">
             <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-300 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-gold"></span>
             </span>
             Live vejr · Hundested Havn
           </div>
@@ -118,20 +177,20 @@
       </div>
       <div class="hidden sm:block h-12 w-px bg-white/20"></div>
       <div class="flex items-center gap-3">
-        <i class="fa-solid fa-wind text-emerald-200 text-xl animate-sway"></i>
-        <p class="font-semibold text-amber-200 text-base sm:text-lg leading-snug">
+        <i class="fa-solid fa-wind text-white/80 text-xl animate-sway"></i>
+        <p class="font-semibold text-gold text-base sm:text-lg leading-snug">
           Perfekt medvind mod Rørvig — tag cyklen i dag! <span class="text-2xl align-middle">🚴‍♀️</span>
         </p>
       </div>
       <div class="sm:ml-auto flex gap-4 text-center">
         <div>
           <p class="text-2xl font-extrabold leading-none"><span id="wWind">4</span></p>
-          <p class="text-[11px] text-emerald-100/80 uppercase tracking-wide mt-1">m/s vind</p>
+          <p class="text-[11px] text-white/70 uppercase tracking-wide mt-1">m/s vind</p>
         </div>
         <div class="h-10 w-px bg-white/20"></div>
         <div>
           <p class="text-2xl font-extrabold leading-none">0%</p>
-          <p class="text-[11px] text-emerald-100/80 uppercase tracking-wide mt-1">Regn</p>
+          <p class="text-[11px] text-white/70 uppercase tracking-wide mt-1">Regn</p>
         </div>
       </div>
     </div>
@@ -139,15 +198,15 @@
     <!-- ============ GRID: RUTE-UNIVERS + BOOKING ============ -->
     <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
 
-      <!-- ----- VENSTRE: RUTE-UNIVERS (2 kolonner) ----- -->
+      <!-- ----- VENSTRE: RUTE-UNIVERS ----- -->
       <section id="ruter" class="lg:col-span-2 space-y-6">
 
         <div class="flex items-end justify-between flex-wrap gap-3">
           <div>
-            <h2 class="text-2xl font-extrabold tracking-tight text-emerald-900">Find din rute</h2>
-            <p class="text-stone-500 text-sm mt-1">Vælg en kategori og klik på en tur for at se detaljer.</p>
+            <h2 class="text-3xl font-extrabold tracking-tight text-petrol">Find din rute</h2>
+            <p class="text-petrol/60 text-sm mt-1">Vælg en kategori og klik på en tur for at se detaljer.</p>
           </div>
-          <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 ring-1 ring-emerald-200 px-3 py-1.5 rounded-full">
+          <span class="text-xs font-semibold text-brand-dark bg-brand/10 ring-1 ring-brand/20 px-3 py-1.5 rounded-full">
             <i class="fa-solid fa-route mr-1"></i><span id="routeCount">3</span> ruter
           </span>
         </div>
@@ -178,23 +237,28 @@
 
       <!-- ----- HØJRE: LYN-BOOKING WIDGET ----- -->
       <aside id="booking" class="lg:sticky lg:top-6">
-        <div class="rounded-2xl bg-white ring-1 ring-stone-200 shadow-xl shadow-stone-300/30 overflow-hidden">
-          <div class="bg-emerald-900 text-white px-5 py-4">
-            <div class="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-widest">
+        <div class="rounded-2xl bg-white ring-1 ring-stone-200 shadow-xl shadow-petrol/10 overflow-hidden">
+          <div class="bg-petrol text-white px-5 py-4">
+            <div class="flex items-center gap-2 text-gold text-xs font-bold uppercase tracking-widest">
               <i class="fa-solid fa-bolt"></i> Lyn-booking
             </div>
             <h3 class="text-xl font-extrabold mt-1">Gående &amp; cyklister</h3>
-            <p class="text-emerald-200/80 text-sm mt-0.5">Ingen bil — bare hop ombord.</p>
+            <p class="text-white/75 text-sm mt-0.5">Ingen bil — bare hop ombord.</p>
           </div>
 
           <div class="p-5 space-y-5">
 
+            <!-- Kampagne-stribe -->
+            <div class="flex items-center gap-2 bg-gold/15 ring-1 ring-gold/40 text-petrol rounded-xl px-3 py-2 text-sm font-semibold">
+              <i class="fa-solid fa-tags text-gold"></i> Skuldersæson-priser — spar op til 40 kr.
+            </div>
+
             <!-- Afgang -->
             <div>
-              <label class="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Afgang</label>
+              <label class="block text-xs font-semibold text-petrol/60 uppercase tracking-wide mb-1.5">Afgang</label>
               <div class="relative">
-                <i class="fa-solid fa-clock absolute left-3 top-1/2 -translate-y-1/2 text-emerald-700"></i>
-                <select id="departure" class="w-full appearance-none bg-stone-50 ring-1 ring-stone-200 rounded-xl py-3 pl-10 pr-9 text-sm font-medium text-stone-700 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                <i class="fa-solid fa-clock absolute left-3 top-1/2 -translate-y-1/2 text-brand-dark"></i>
+                <select id="departure" class="w-full appearance-none bg-stone-50 ring-1 ring-stone-200 rounded-xl py-3 pl-10 pr-9 text-sm font-medium text-petrol focus:ring-2 focus:ring-brand focus:outline-none">
                   <option>I dag · 11:30</option>
                   <option>I dag · 13:00</option>
                   <option>I dag · 14:30</option>
@@ -207,20 +271,20 @@
             <!-- Antal voksne -->
             <div class="flex items-center justify-between gap-3">
               <div class="flex items-center gap-3">
-                <div class="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center">
-                  <i class="fa-solid fa-person-walking text-emerald-700"></i>
+                <div class="h-10 w-10 rounded-xl bg-brand/10 flex items-center justify-center">
+                  <i class="fa-solid fa-person-walking text-brand-dark"></i>
                 </div>
                 <div>
-                  <p class="font-semibold text-sm text-stone-800">Voksne</p>
-                  <p class="text-xs text-stone-500">50 kr. pr. person</p>
+                  <p class="font-semibold text-sm text-petrol">Voksne</p>
+                  <p class="text-xs text-petrol/55"><span class="line-through">80 kr.</span> <span class="text-pricegreen font-bold">50 kr.</span> pr. person</p>
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <button data-counter="adults" data-step="-1" class="counter-btn h-9 w-9 rounded-lg ring-1 ring-stone-200 text-emerald-800 hover:bg-emerald-50 active:scale-95 transition flex items-center justify-center">
+                <button data-counter="adults" data-step="-1" class="counter-btn h-9 w-9 rounded-lg ring-1 ring-stone-200 text-brand-dark hover:bg-brand/10 active:scale-95 transition flex items-center justify-center">
                   <i class="fa-solid fa-minus text-xs"></i>
                 </button>
-                <span id="adultsVal" class="w-7 text-center font-bold text-stone-800">1</span>
-                <button data-counter="adults" data-step="1" class="counter-btn h-9 w-9 rounded-lg ring-1 ring-stone-200 text-emerald-800 hover:bg-emerald-50 active:scale-95 transition flex items-center justify-center">
+                <span id="adultsVal" class="w-7 text-center font-bold text-petrol">1</span>
+                <button data-counter="adults" data-step="1" class="counter-btn h-9 w-9 rounded-lg ring-1 ring-stone-200 text-brand-dark hover:bg-brand/10 active:scale-95 transition flex items-center justify-center">
                   <i class="fa-solid fa-plus text-xs"></i>
                 </button>
               </div>
@@ -229,20 +293,20 @@
             <!-- Antal cykler -->
             <div class="flex items-center justify-between gap-3">
               <div class="flex items-center gap-3">
-                <div class="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center">
-                  <i class="fa-solid fa-bicycle text-emerald-700"></i>
+                <div class="h-10 w-10 rounded-xl bg-brand/10 flex items-center justify-center">
+                  <i class="fa-solid fa-bicycle text-brand-dark"></i>
                 </div>
                 <div>
-                  <p class="font-semibold text-sm text-stone-800">Cykler</p>
-                  <p class="text-xs text-stone-500">25 kr. pr. cykel</p>
+                  <p class="font-semibold text-sm text-petrol">Cykler</p>
+                  <p class="text-xs text-petrol/55"><span class="line-through">25 kr.</span> <span class="text-pricegreen font-bold">15 kr.</span> pr. cykel</p>
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <button data-counter="bikes" data-step="-1" class="counter-btn h-9 w-9 rounded-lg ring-1 ring-stone-200 text-emerald-800 hover:bg-emerald-50 active:scale-95 transition flex items-center justify-center">
+                <button data-counter="bikes" data-step="-1" class="counter-btn h-9 w-9 rounded-lg ring-1 ring-stone-200 text-brand-dark hover:bg-brand/10 active:scale-95 transition flex items-center justify-center">
                   <i class="fa-solid fa-minus text-xs"></i>
                 </button>
-                <span id="bikesVal" class="w-7 text-center font-bold text-stone-800">1</span>
-                <button data-counter="bikes" data-step="1" class="counter-btn h-9 w-9 rounded-lg ring-1 ring-stone-200 text-emerald-800 hover:bg-emerald-50 active:scale-95 transition flex items-center justify-center">
+                <span id="bikesVal" class="w-7 text-center font-bold text-petrol">1</span>
+                <button data-counter="bikes" data-step="1" class="counter-btn h-9 w-9 rounded-lg ring-1 ring-stone-200 text-brand-dark hover:bg-brand/10 active:scale-95 transition flex items-center justify-center">
                   <i class="fa-solid fa-plus text-xs"></i>
                 </button>
               </div>
@@ -250,25 +314,29 @@
 
             <!-- Prisopdeling -->
             <div class="rounded-xl bg-stone-50 ring-1 ring-stone-200 p-4 space-y-2 text-sm">
-              <div class="flex justify-between text-stone-600">
+              <div class="flex justify-between text-petrol/70">
                 <span><span id="sumAdults">1</span> × Voksen</span>
                 <span id="sumAdultsPrice">50 kr.</span>
               </div>
-              <div class="flex justify-between text-stone-600">
+              <div class="flex justify-between text-petrol/70">
                 <span><span id="sumBikes">1</span> × Cykel</span>
-                <span id="sumBikesPrice">25 kr.</span>
+                <span id="sumBikesPrice">15 kr.</span>
+              </div>
+              <div class="flex justify-between text-pricegreen font-semibold">
+                <span><i class="fa-solid fa-piggy-bank mr-1"></i>Du sparer</span>
+                <span id="savings">40 kr.</span>
               </div>
               <div class="border-t border-dashed border-stone-300 pt-2 flex justify-between items-center">
-                <span class="font-bold text-stone-800">Total</span>
-                <span id="totalPrice" class="text-2xl font-extrabold text-emerald-800">75 kr.</span>
+                <span class="font-bold text-petrol">Total</span>
+                <span id="totalPrice" class="text-2xl font-extrabold text-petrol">65 kr.</span>
               </div>
             </div>
 
             <!-- Reserver -->
-            <button id="reserveBtn" class="w-full bg-amber-500 hover:bg-amber-400 active:scale-[.98] text-emerald-950 font-extrabold text-base py-4 rounded-xl shadow-lg shadow-amber-500/30 transition flex items-center justify-center gap-2">
+            <button id="reserveBtn" class="w-full bg-gold hover:brightness-105 active:scale-[.98] text-petrol font-extrabold text-base py-4 rounded-full shadow-lg shadow-gold/30 transition flex items-center justify-center gap-2">
               <i class="fa-solid fa-ticket"></i> Reserver Plads Nu
             </button>
-            <p class="text-center text-xs text-stone-400">
+            <p class="text-center text-xs text-petrol/45">
               <i class="fa-solid fa-lock"></i> Gratis afbestilling indtil 2 timer før afgang
             </p>
           </div>
@@ -278,35 +346,80 @@
     </div>
   </main>
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="bg-emerald-950 text-emerald-200/70 text-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <p><i class="fa-solid fa-ferry text-amber-400 mr-2"></i>Hundested–Rørvig Færgefart · Tur-guide prototype</p>
-      <p class="text-emerald-300/50 text-xs">Demo · Vejr- og betalingsdata er simuleret</p>
+  <!-- ============ FOOTER (site-matchende) ============ -->
+  <footer class="bg-petrol text-white/85 text-sm relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
+      <!-- Logo -->
+      <div class="col-span-2 md:col-span-1">
+        <div class="flex items-center gap-3">
+          <div class="logo-circle h-12 w-12 rounded-full bg-brandred flex items-center justify-center font-extrabold text-white text-lg tracking-tighter">H/R</div>
+          <div class="leading-none">
+            <p class="font-extrabold text-[14px] tracking-tight">HUNDESTED<br>RØRVIG A/S</p>
+            <p class="text-[9px] tracking-[0.35em] text-white/60 mt-0.5">FÆRGEFART</p>
+          </div>
+        </div>
+        <a href="#" aria-label="Facebook" class="mt-5 inline-flex h-10 w-10 rounded-full bg-brand items-center justify-center text-white hover:bg-brand-dark transition">
+          <i class="fa-brands fa-facebook-f"></i>
+        </a>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-white uppercase tracking-wide mb-3">Administration</h4>
+        <p>Amtsvejen 2<br>3390 Hundested</p>
+        <p class="mt-3"><i class="fa-solid fa-phone text-brand-light mr-1.5"></i>+45 47 93 71 50</p>
+        <p class="mt-1 break-all"><i class="fa-solid fa-envelope text-brand-light mr-1.5"></i>hundested@hundested-roervig.dk</p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-white mb-3">Afgangshavne</h4>
+        <p class="font-semibold text-white/90">Afgangshavn Hundested</p>
+        <p>Havnegade 21, 3390 Hundested</p>
+        <p class="mt-3 font-semibold text-white/90">Afgangshavn Rørvig</p>
+        <p>Toldbodvej 77, 4581 Rørvig</p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-white uppercase tracking-wide mb-3 text-xs">Befordringsbestemmelser</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-brand-light transition">Hundested-Rørvig Færgefart film</a></li>
+          <li><a href="#" class="hover:text-brand-light transition">På tur med NAKKEHAGE</a></li>
+          <li><a href="#" class="hover:text-brand-light transition">Job hos Hundested-Rørvig Færgefart</a></li>
+          <li><a href="#" class="hover:text-brand-light transition">Privatliv og cookies</a></li>
+        </ul>
+      </div>
     </div>
+    <div class="border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 text-xs text-white/50 flex flex-col sm:flex-row justify-between gap-2">
+        <p>© Hundested–Rørvig Færgefart · Tur-guide prototype</p>
+        <p>Demo · Vejr- og betalingsdata er simuleret</p>
+      </div>
+    </div>
+    <a href="#" aria-label="Til toppen" class="absolute right-6 -top-6 h-12 w-12 rounded-full bg-brandred hover:brightness-110 text-white flex items-center justify-center shadow-lg transition">
+      <i class="fa-solid fa-chevron-up"></i>
+    </a>
   </footer>
 
   <!-- ============ 4. SUCCESS MODAL (BOARDINGPAS) ============ -->
   <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
-    <div id="modalBackdrop" class="absolute inset-0 bg-stone-900/70 backdrop-blur-sm animate-fadeIn"></div>
+    <div id="modalBackdrop" class="absolute inset-0 bg-petrol/70 backdrop-blur-sm animate-fadeIn"></div>
 
     <div class="relative w-full max-w-md animate-scaleIn">
       <div class="rounded-3xl bg-stone-50 shadow-2xl overflow-hidden">
 
         <!-- Top -->
-        <div class="bg-emerald-800 text-white px-6 pt-7 pb-9 text-center relative">
+        <div class="bg-petrol text-white px-6 pt-7 pb-9 text-center relative">
           <button id="modalCloseTop" class="absolute top-4 right-4 h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 transition flex items-center justify-center" aria-label="Luk">
             <i class="fa-solid fa-xmark"></i>
           </button>
-          <div class="mx-auto h-16 w-16 rounded-full bg-amber-400 flex items-center justify-center shadow-lg">
-            <i class="fa-solid fa-check text-emerald-900 text-3xl"></i>
+          <div class="mx-auto h-16 w-16 rounded-full bg-gold flex items-center justify-center shadow-lg">
+            <i class="fa-solid fa-check text-petrol text-3xl"></i>
           </div>
           <h3 class="mt-4 text-2xl font-extrabold">Klar til afgang! 🎉</h3>
-          <p class="text-emerald-100/90 text-sm mt-1">Din plads på færgen er reserveret.</p>
+          <p class="text-white/85 text-sm mt-1">Din plads på færgen er reserveret.</p>
         </div>
 
         <!-- Perforering -->
-        <div class="relative bg-emerald-800 h-0">
+        <div class="relative bg-petrol h-0">
           <div class="absolute -left-3 -top-3 h-6 w-6 rounded-full bg-stone-100"></div>
           <div class="absolute -right-3 -top-3 h-6 w-6 rounded-full bg-stone-100"></div>
         </div>
@@ -315,11 +428,11 @@
         <div class="px-6 py-6">
           <div class="flex items-center justify-between gap-4">
             <div class="text-left">
-              <p class="text-[11px] uppercase tracking-widest text-stone-400 font-semibold">Boardingpas</p>
-              <div class="flex items-center gap-2 mt-1.5 font-extrabold text-emerald-900 text-lg">
-                Hundested <i class="fa-solid fa-arrow-right-long text-amber-500 text-sm"></i> Rørvig
+              <p class="text-[11px] uppercase tracking-widest text-petrol/40 font-semibold">Boardingpas</p>
+              <div class="flex items-center gap-2 mt-1.5 font-extrabold text-petrol text-lg">
+                Hundested <i class="fa-solid fa-arrow-right-long text-gold text-sm"></i> Rørvig
               </div>
-              <p id="modalDeparture" class="text-sm text-stone-500 mt-1"><i class="fa-regular fa-clock mr-1"></i>I dag · 11:30</p>
+              <p id="modalDeparture" class="text-sm text-petrol/55 mt-1"><i class="fa-regular fa-clock mr-1"></i>I dag · 11:30</p>
             </div>
             <!-- Simuleret QR -->
             <div class="shrink-0 p-2 bg-white rounded-xl ring-1 ring-stone-200">
@@ -330,29 +443,29 @@
           <!-- Passagerinfo -->
           <div class="mt-5 grid grid-cols-3 gap-2 text-center">
             <div class="rounded-xl bg-white ring-1 ring-stone-200 py-3">
-              <p id="modalAdults" class="font-extrabold text-emerald-900 text-lg">1</p>
-              <p class="text-[11px] text-stone-500 uppercase tracking-wide">Voksne</p>
+              <p id="modalAdults" class="font-extrabold text-petrol text-lg">1</p>
+              <p class="text-[11px] text-petrol/50 uppercase tracking-wide">Voksne</p>
             </div>
             <div class="rounded-xl bg-white ring-1 ring-stone-200 py-3">
-              <p id="modalBikes" class="font-extrabold text-emerald-900 text-lg">1</p>
-              <p class="text-[11px] text-stone-500 uppercase tracking-wide">Cykler</p>
+              <p id="modalBikes" class="font-extrabold text-petrol text-lg">1</p>
+              <p class="text-[11px] text-petrol/50 uppercase tracking-wide">Cykler</p>
             </div>
-            <div class="rounded-xl bg-emerald-50 ring-1 ring-emerald-200 py-3">
-              <p id="modalTotal" class="font-extrabold text-emerald-800 text-lg">75 kr.</p>
-              <p class="text-[11px] text-emerald-600 uppercase tracking-wide">Betalt</p>
+            <div class="rounded-xl bg-brand/10 ring-1 ring-brand/30 py-3">
+              <p id="modalTotal" class="font-extrabold text-brand-dark text-lg">65 kr.</p>
+              <p class="text-[11px] text-brand-dark uppercase tracking-wide">Betalt</p>
             </div>
           </div>
 
           <!-- GPX besked -->
-          <div class="mt-5 rounded-xl bg-emerald-900 text-emerald-50 p-4 flex items-start gap-3">
-            <i class="fa-solid fa-envelope-circle-check text-amber-300 text-xl mt-0.5"></i>
+          <div class="mt-5 rounded-xl bg-petrol text-white p-4 flex items-start gap-3">
+            <i class="fa-solid fa-envelope-circle-check text-gold text-xl mt-0.5"></i>
             <div>
               <p class="font-semibold text-sm">GPX-fil sendt til din mail</p>
-              <p class="text-emerald-200/80 text-xs mt-0.5" id="modalRouteName">Ruten er klar i din GPS — god tur!</p>
+              <p class="text-white/80 text-xs mt-0.5" id="modalRouteName">Ruten er klar i din GPS — god tur!</p>
             </div>
           </div>
 
-          <button id="modalCloseBtn" class="mt-5 w-full bg-emerald-800 hover:bg-emerald-700 active:scale-[.98] text-white font-bold py-3.5 rounded-xl transition">
+          <button id="modalCloseBtn" class="mt-5 w-full bg-petrol hover:bg-petrol-light active:scale-[.98] text-white font-bold py-3.5 rounded-full transition">
             Luk
           </button>
         </div>
@@ -366,46 +479,25 @@
   // ============================================================
   const ROUTES = [
     {
-      id: 'isefjord',
-      title: 'Isefjordsrunden',
-      cat: 'gravel',
-      catLabel: 'Gravel & Adventure',
-      dist: '42 km',
-      time: '3,5 t',
-      diff: 'Udfordrende',
-      icon: 'fa-mountain-sun',
+      id: 'isefjord', title: 'Isefjordsrunden', cat: 'gravel', catLabel: 'Gravel & Adventure',
+      dist: '42 km', time: '3,5 t', diff: 'Udfordrende', icon: 'fa-mountain-sun',
       blurb: 'Lang gravel-runde langs Isefjorden med vekslende grus, skovspor og åbne marker.',
       highlights: ['Udsigt fra Spodsbjerg Fyr', 'Grusveje gennem Kongsøre Skov', 'Frokoststop i Rørvig Havn', 'Bølgede bakker ved Nakke'],
       surface: 'Grus & skovspor',
-      color: 'amber',
     },
     {
-      id: 'halsnaes',
-      title: 'Halsnæs Kyst- & Is-tur',
-      cat: 'family',
-      catLabel: 'Familievenligt',
-      dist: '14 km',
-      time: '1,5 t',
-      diff: 'Let',
-      icon: 'fa-ice-cream',
+      id: 'halsnaes', title: 'Halsnæs Kyst- & Is-tur', cat: 'family', catLabel: 'Familievenligt',
+      dist: '14 km', time: '1,5 t', diff: 'Let', icon: 'fa-ice-cream',
       blurb: 'Kort, flad og familievenlig tur langs kysten med is-stop og badestrande undervejs.',
-      highlights: ['Is ved Hundested Havn', 'Badestrand ved Lynæs', 'Sandsculpture-park', 'Legeplads ved Nødebohuse'],
+      highlights: ['Is ved Hundested Havn', 'Badestrand ved Lynæs', 'Sandskulptur-park', 'Legeplads ved Nødebohuse'],
       surface: 'Asfalt & cykelsti',
-      color: 'sky',
     },
     {
-      id: 'fjordstien',
-      title: 'Fjordstien',
-      cat: 'hike',
-      catLabel: 'Vandring & Natur',
-      dist: '11 km',
-      time: '2,5 t',
-      diff: 'Moderat',
-      icon: 'fa-person-hiking',
+      id: 'fjordstien', title: 'Fjordstien', cat: 'hike', catLabel: 'Vandring & Natur',
+      dist: '11 km', time: '2,5 t', diff: 'Moderat', icon: 'fa-person-hiking',
       blurb: 'Smuk vandrerute ad den afmærkede Fjordsti med rig natur, fugleliv og fjordudsigt.',
       highlights: ['Fugletårn ved Hov Vig', 'Hede- og klitnatur', 'Panoramaudsigt over fjorden', 'Stillezone ved Dybesø'],
       surface: 'Natursti & trampesti',
-      color: 'emerald',
     },
   ];
 
@@ -417,8 +509,8 @@
     selectedRoute: 'isefjord',
     adults: 1,
     bikes: 1,
-    PRICE_ADULT: 50,
-    PRICE_BIKE: 25,
+    PRICE_ADULT: 50, NORM_ADULT: 80,
+    PRICE_BIKE: 15,  NORM_BIKE: 25,
   };
 
   const $ = (sel) => document.querySelector(sel);
@@ -432,8 +524,8 @@
       const active = btn.dataset.filter === state.filter;
       btn.className = 'filter-btn px-4 py-2 rounded-full text-sm font-semibold transition ' +
         (active
-          ? 'bg-emerald-800 text-white shadow-md shadow-emerald-900/20'
-          : 'bg-white text-stone-600 ring-1 ring-stone-200 hover:ring-emerald-300 hover:text-emerald-800');
+          ? 'bg-brand text-white shadow-md shadow-petrol/20'
+          : 'bg-white text-petrol/70 ring-1 ring-stone-200 hover:ring-brand/40 hover:text-brand-dark');
     });
   }
 
@@ -441,9 +533,9 @@
   //  RENDER: Rute-kort
   // ============================================================
   const diffColors = {
-    'Let': 'bg-emerald-100 text-emerald-700',
-    'Moderat': 'bg-sky-100 text-sky-700',
-    'Udfordrende': 'bg-amber-100 text-amber-700',
+    'Let': 'bg-brand/15 text-brand-dark',
+    'Moderat': 'bg-petrol/10 text-petrol',
+    'Udfordrende': 'bg-gold/20 text-[#9a7400]',
   };
 
   function renderRoutes() {
@@ -452,7 +544,7 @@
     $('#routeCount').textContent = visible.length;
 
     if (visible.length === 0) {
-      list.innerHTML = `<div class="sm:col-span-2 text-center py-10 text-stone-400">
+      list.innerHTML = `<div class="sm:col-span-2 text-center py-10 text-petrol/40">
         <i class="fa-solid fa-binoculars text-3xl mb-2"></i>
         <p>Ingen ruter i denne kategori endnu.</p></div>`;
       return;
@@ -461,20 +553,20 @@
     list.innerHTML = visible.map((r) => {
       const active = r.id === state.selectedRoute;
       return `
-      <button data-route="${r.id}" class="route-card ${active ? 'active' : ''} text-left bg-white rounded-2xl ring-1 ring-stone-200 hover:ring-emerald-300 p-5 transition group">
+      <button data-route="${r.id}" class="route-card ${active ? 'active' : ''} text-left bg-white rounded-2xl ring-1 ring-stone-200 hover:ring-brand/40 p-5 transition group">
         <div class="flex items-start justify-between">
-          <div class="h-12 w-12 rounded-xl bg-emerald-50 group-hover:bg-emerald-100 flex items-center justify-center transition">
-            <i class="fa-solid ${r.icon} text-emerald-700 text-xl"></i>
+          <div class="h-12 w-12 rounded-xl bg-brand/10 group-hover:bg-brand/20 flex items-center justify-center transition">
+            <i class="fa-solid ${r.icon} text-brand-dark text-xl"></i>
           </div>
           <span class="text-[11px] font-semibold px-2.5 py-1 rounded-full ${diffColors[r.diff]}">${r.diff}</span>
         </div>
-        <h3 class="mt-3 font-extrabold text-lg text-emerald-900 leading-snug">${r.title}</h3>
-        <p class="text-xs font-medium text-stone-400 uppercase tracking-wide mt-0.5">${r.catLabel}</p>
-        <div class="flex items-center gap-4 mt-3 text-sm text-stone-600">
-          <span><i class="fa-solid fa-route text-emerald-600 mr-1"></i>${r.dist}</span>
-          <span><i class="fa-regular fa-clock text-emerald-600 mr-1"></i>${r.time}</span>
+        <h3 class="mt-3 font-extrabold text-lg text-petrol leading-snug">${r.title}</h3>
+        <p class="text-xs font-medium text-petrol/40 uppercase tracking-wide mt-0.5">${r.catLabel}</p>
+        <div class="flex items-center gap-4 mt-3 text-sm text-petrol/70">
+          <span><i class="fa-solid fa-route text-brand mr-1"></i>${r.dist}</span>
+          <span><i class="fa-regular fa-clock text-brand mr-1"></i>${r.time}</span>
         </div>
-        <div class="mt-3 flex items-center text-sm font-semibold ${active ? 'text-emerald-700' : 'text-stone-400 group-hover:text-emerald-700'} transition">
+        <div class="mt-3 flex items-center text-sm font-semibold ${active ? 'text-brand-dark' : 'text-petrol/40 group-hover:text-brand-dark'} transition">
           ${active ? '<i class="fa-solid fa-circle-check mr-1.5"></i>Valgt — se detaljer' : 'Se detaljer <i class="fa-solid fa-arrow-right ml-1.5 group-hover:translate-x-0.5 transition-transform"></i>'}
         </div>
       </button>`;
@@ -488,53 +580,52 @@
     const r = ROUTES.find((x) => x.id === state.selectedRoute);
     const panel = $('#detailPanel');
 
-    // Hvis valgt rute ikke er synlig i filteret, vis tom-state
     const visibleIds = ROUTES.filter((x) => state.filter === 'all' || x.cat === state.filter).map((x) => x.id);
     if (!r || !visibleIds.includes(r.id)) {
-      panel.innerHTML = `<div class="p-8 text-center text-stone-400">
+      panel.innerHTML = `<div class="p-8 text-center text-petrol/40">
         <i class="fa-solid fa-hand-pointer text-3xl mb-3"></i>
         <p class="font-medium">Vælg en rute ovenfor for at se detaljer og hente GPX-fil.</p></div>`;
       return;
     }
 
     panel.innerHTML = `
-      <div class="bg-gradient-to-br from-emerald-800 to-emerald-900 text-white p-6">
-        <div class="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-widest">
+      <div class="bg-gradient-to-br from-petrol to-petrol-light text-white p-6">
+        <div class="flex items-center gap-2 text-gold text-xs font-bold uppercase tracking-widest">
           <i class="fa-solid ${r.icon}"></i> ${r.catLabel}
         </div>
         <h3 class="text-2xl font-extrabold mt-2">${r.title}</h3>
-        <p class="text-emerald-100/90 text-sm mt-1.5 max-w-lg">${r.blurb}</p>
+        <p class="text-white/85 text-sm mt-1.5 max-w-lg">${r.blurb}</p>
         <div class="mt-4 flex flex-wrap gap-3">
           <div class="bg-white/10 ring-1 ring-white/15 rounded-xl px-4 py-2">
-            <p class="text-[11px] text-emerald-200 uppercase tracking-wide">Distance</p>
+            <p class="text-[11px] text-white/70 uppercase tracking-wide">Distance</p>
             <p class="font-bold text-lg">${r.dist}</p>
           </div>
           <div class="bg-white/10 ring-1 ring-white/15 rounded-xl px-4 py-2">
-            <p class="text-[11px] text-emerald-200 uppercase tracking-wide">Tid</p>
+            <p class="text-[11px] text-white/70 uppercase tracking-wide">Tid</p>
             <p class="font-bold text-lg">${r.time}</p>
           </div>
           <div class="bg-white/10 ring-1 ring-white/15 rounded-xl px-4 py-2">
-            <p class="text-[11px] text-emerald-200 uppercase tracking-wide">Underlag</p>
+            <p class="text-[11px] text-white/70 uppercase tracking-wide">Underlag</p>
             <p class="font-bold text-lg">${r.surface}</p>
           </div>
         </div>
       </div>
       <div class="p-6">
-        <h4 class="font-bold text-emerald-900 flex items-center gap-2">
-          <i class="fa-solid fa-star text-amber-500"></i> Højdepunkter på ruten
+        <h4 class="font-bold text-petrol flex items-center gap-2">
+          <i class="fa-solid fa-star text-gold"></i> Højdepunkter på ruten
         </h4>
         <ul class="mt-3 grid sm:grid-cols-2 gap-2.5">
           ${r.highlights.map((h) => `
-            <li class="flex items-start gap-2.5 text-sm text-stone-700">
-              <i class="fa-solid fa-location-dot text-emerald-600 mt-0.5"></i>
+            <li class="flex items-start gap-2.5 text-sm text-petrol/80">
+              <i class="fa-solid fa-location-dot text-brand mt-0.5"></i>
               <span>${h}</span>
             </li>`).join('')}
         </ul>
-        <button data-gpx="${r.id}" class="gpx-btn mt-6 w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-800 hover:bg-emerald-700 active:scale-[.98] text-white font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-900/20 transition">
+        <button data-gpx="${r.id}" class="gpx-btn mt-6 w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-petrol hover:bg-petrol-light active:scale-[.98] text-white font-bold px-6 py-3.5 rounded-full shadow-lg shadow-petrol/20 transition">
           <i class="fa-solid fa-download"></i> Download GPX-fil
-          <span class="text-emerald-300 font-normal text-sm">· ${r.title}</span>
+          <span class="text-white/60 font-normal text-sm">· ${r.title}</span>
         </button>
-        <p class="text-xs text-stone-400 mt-2"><i class="fa-solid fa-circle-info mr-1"></i>Filen åbnes i Garmin, Komoot, Strava m.fl.</p>
+        <p class="text-xs text-petrol/40 mt-2"><i class="fa-solid fa-circle-info mr-1"></i>Filen åbnes i Garmin, Komoot, Strava m.fl.</p>
       </div>`;
   }
 
@@ -545,6 +636,8 @@
     const aTotal = state.adults * state.PRICE_ADULT;
     const bTotal = state.bikes * state.PRICE_BIKE;
     const total = aTotal + bTotal;
+    const savings = state.adults * (state.NORM_ADULT - state.PRICE_ADULT)
+                  + state.bikes * (state.NORM_BIKE - state.PRICE_BIKE);
 
     $('#adultsVal').textContent = state.adults;
     $('#bikesVal').textContent = state.bikes;
@@ -552,6 +645,7 @@
     $('#sumBikes').textContent = state.bikes;
     $('#sumAdultsPrice').textContent = aTotal + ' kr.';
     $('#sumBikesPrice').textContent = bTotal + ' kr.';
+    $('#savings').textContent = savings + ' kr.';
     $('#totalPrice').textContent = total + ' kr.';
   }
 
@@ -562,19 +656,12 @@
     const grid = $('#qrCode');
     const N = 11;
     let html = '';
-    // pseudo-tilfældigt men stabilt mønster
     const seed = state.adults * 7 + state.bikes * 13 + 42;
     for (let i = 0; i < N * N; i++) {
       const row = Math.floor(i / N), col = i % N;
-      // finder-mønstre i tre hjørner
-      const inFinder = (r, c) =>
-        (r < 3 && c < 3) || (r < 3 && c > N - 4) || (r > N - 4 && c < 3);
+      const inFinder = (r, c) => (r < 3 && c < 3) || (r < 3 && c > N - 4) || (r > N - 4 && c < 3);
       let on;
       if (inFinder(row, col)) {
-        on = (row === 0 || row === 2 || col === 0 || col === 2 ||
-              (row === N - 1) || (col === N - 1) ||
-              (row === 1 && col === 1)) ? true : false;
-        // forenklet: tegn ramme + center
         on = (row % 2 === 0 || col % 2 === 0);
       } else {
         on = ((i * seed) % 7 < 3);
@@ -616,7 +703,6 @@
   // ============================================================
   //  EVENTS (delegering)
   // ============================================================
-  // Filter-tabs
   $('#filterTabs').addEventListener('click', (e) => {
     const btn = e.target.closest('.filter-btn');
     if (!btn) return;
@@ -626,20 +712,17 @@
     renderDetail();
   });
 
-  // Rute-kort valg
   $('#routeList').addEventListener('click', (e) => {
     const card = e.target.closest('[data-route]');
     if (!card) return;
     state.selectedRoute = card.dataset.route;
     renderRoutes();
     renderDetail();
-    // scroll detaljepanel i syne på mobil
     if (window.innerWidth < 1024) {
       $('#detailPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   });
 
-  // GPX download (delegering på panel)
   $('#detailPanel').addEventListener('click', (e) => {
     const btn = e.target.closest('.gpx-btn');
     if (!btn) return;
@@ -652,30 +735,24 @@
     );
   });
 
-  // Tæller-knapper
   $$('.counter-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const key = btn.dataset.counter;       // 'adults' | 'bikes'
+      const key = btn.dataset.counter;
       const step = parseInt(btn.dataset.step, 10);
-      const min = key === 'adults' ? 1 : 0;   // mindst 1 voksen
+      const min = key === 'adults' ? 1 : 0;
       state[key] = Math.max(min, Math.min(20, state[key] + step));
       renderBooking();
     });
   });
 
-  // Reserver
   $('#reserveBtn').addEventListener('click', openModal);
-
-  // Modal luk
   $('#modalCloseBtn').addEventListener('click', closeModal);
   $('#modalCloseTop').addEventListener('click', closeModal);
   $('#modalBackdrop').addEventListener('click', closeModal);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
   // ============================================================
-  //  VEJR-SIMULATION (let live-følelse)
+  //  VEJR-SIMULATION
   // ============================================================
   function simulateWeather() {
     const temps = [20, 21, 22, 21, 23];
